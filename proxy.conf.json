@@ -1,0 +1,7 @@
+{
+    "/rest/*": {
+      "target": "http://admprecontratosrest.atwebpages.com:80",
+      "secure": false,
+      "logLevel": "debug"
+    }
+  }

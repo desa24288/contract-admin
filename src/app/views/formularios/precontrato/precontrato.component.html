@@ -1,0 +1,232 @@
+<app-menu></app-menu>
+<div class="loading-container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb breadcrumbtext">
+    <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ cabecera }}</li>
+  </ol>
+</nav>
+
+<ng-progress></ng-progress>
+
+
+  <div class="container-full">
+
+    <div class="card" style="margin-bottom: -2px;">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <button type="button" class="btn btn-info btn-sm ml-1" tooltip="GENERAR DOCUMENTO" (click)="onGenerar()"
+              ><i class="fas fa-file-archive"></i>
+              GENERAR DOCUMENTO</button>
+            <button type="button" class="btn btn-info btn-sm ml-2" tooltip="LIMPIAR" (click)="onLimpiar()">
+              <i class="fas fa-broom"></i>
+              LIMPIAR</button>
+            <button type="button" class="btn btn-info btn-sm m-2" tooltip="CERRAR" (click)="onCerrar()"><i
+                class="fas fa-window-close"></i>
+              CERRAR</button>
+            <!-- <button type="button" class="btn btn-info btn-sm ml-2" tooltip="PRUEBA 1" (click)="onPruebarest()">
+              PRUEBA 1</button>
+            <button type="button" class="btn btn-info btn-sm ml-2" tooltip="PRUEBA 2" (click)="onPruebarestB()">
+              PRUEBA 2</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body div-top">
+            <form novalidate [formGroup]="pForm" autocomplete="off" spellcheck="false">
+              <div class="row mb-2">
+                    <div class="form-goup col-sm-2">
+                        <label for="fechacontrato" class="col-form-label-sm">FECHA CONTRATO</label>
+                        <input type="text" appSelecttext class="form-control form-control-sm" placeholder="DD/MM/YYYY" 
+                        bsDatepicker [bsConfig]="bsConfig" placement="right" formControlName="fechacontrato">
+                        <p class="text-danger text-form-valid"
+                        *ngIf="pForm.controls.fechacontrato.invalid && pForm.controls.fechacontrato.touched">
+                        Requerido, Fecha Contrato debe ser Menor a Fecha Término
+                        </p>
+                    </div>
+                    <div class="form-goup col-sm-2">
+                      <label for="fechatermino" class="col-form-label-sm">FECHA TÉRMINO</label>
+                      <input type="text" appSelecttext class="form-control form-control-sm" placeholder="DD/MM/YYYY" 
+                      bsDatepicker [bsConfig]="bsConfig" placement="right" formControlName="fechatermino">
+                      <p class="text-danger text-form-valid"
+                      *ngIf="pForm.controls.fechatermino.invalid && pForm.controls.fechatermino.touched">
+                      Requerido, Fecha Término debe ser Mayor a Fecha Contrato
+                      </p>
+                  </div>
+                    <div class="form-goup col-sm-2">
+                        <label for="rutempresa" class="col-form-label-sm">RUT EMPRESA</label>
+                        <input type="text" appSelecttext class="form-control form-control-sm"
+                        placeholder="INGRESE RUT EMPRESA" formatRut formControlName="rutempresa"
+                        (focusout)="outRutempresa()">
+                        <p class="text-danger text-form-valid"
+                        *ngIf="pForm.controls.rutempresa.invalid && pForm.controls.rutempresa.touched">
+                        Requerido
+                        </p>
+                    </div>
+                   
+                </div>
+                <div class="row mb-1">
+                  <div class="form-goup col-sm-4">
+                    <!-- ** COMPLETAR AUTOMATICAMENTE POR RUT EMPRESA ** -->
+                    <label for="nomempresa" class="col-form-label-sm">NOMBRE EMPRESA</label>
+                    <input type="text" appSelecttext class="form-control form-control-sm"
+                    formControlName="nomempresa">
+                    <p class="text-danger text-form-valid"
+                    *ngIf="pForm.controls.nomempresa.invalid && pForm.controls.nomempresa.touched">
+                    Requerido
+                    </p>
+                  </div>
+
+                  <div class="form-goup col-sm-5">
+                      <!-- ** COMPLETAR AUTOMATICAMENTE POR RUT EMPRESA ** -->
+                      <label for="domicilioemp" class="col-form-label-sm">DOMICILIO EMPRESA</label>
+                      <input type="text" appSelecttext class="form-control form-control-sm" max="500"
+                      formControlName="domicilioemp">
+                      <p class="text-danger text-form-valid"
+                      *ngIf="pForm.controls.domicilioemp.invalid && pForm.controls.domicilioemp.touched">
+                      Requerido
+                      </p>
+                  </div>
+                </div>
+                <div class="row mt-1 mb-1">
+                  <div class="form-goup col-sm-2">
+                    <label for="codsence" class="col-form-label-sm">CÓDIGO CURSO</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="INGRESE CÓDIGO SENCE" 
+                    placement="right" formControlName="codsence" (focusout)="outSence()">
+                    <p class="text-danger text-form-valid"
+                    *ngIf="pForm.controls.codsence.invalid && pForm.controls.codsence.touched">
+                    Requerido
+                    </p>
+                  </div>
+
+                  <div class="form-goup col-sm-2">
+                    <label for="modcurso" class="col-form-label-sm">MODALIDAD CURSO</label>
+                    <input type="text" class="form-control form-control-sm"
+                    placement="right" formControlName="modcurso">
+                </div>
+
+                  <div class="form-goup col-sm-5">
+                   <label for="nomcurso" class="col-form-label-sm">NOMBRE CURSO</label>
+                   <input type="text" appSelecttext class="form-control form-control-sm" max="500"
+                   formControlName="nomcurso">
+                </div>
+
+                </div>
+                <div class="row mt-1 mb-1">
+                  <div class="form-goup col-sm-4">
+                      <label for="horariocurso" class="col-form-label-sm">HORARIO CURSO</label>
+                      <input type="text" class="form-control form-control-sm"
+                      placement="right" formControlName="horariocurso">
+                  </div>
+                  <div class="form-goup col-sm-1">
+                    <label for="duracioncurso" class="col-form-label-sm">DURACIÓN(HRS)</label>
+                    <input type="text" class="form-control form-control-sm"
+                    placement="right" formControlName="duracioncurso">
+                </div>
+                <!-- // OTEC // -->
+                </div>
+                <div class="row mt-1 mb-1">
+                  <div class="form-goup col-sm-4">
+                    <label for="capacitador" class="col-form-label-sm">OTEC</label>
+                    <select class="col-md-12" formControlName="capacitador"
+                    (change)="onOtec($event.target.value)">
+                      <!-- <option *ngFor="let otec of otecarr" [ngValue]='otec'> -->
+                      <option *ngFor="let otec of otecarr" [ngValue]='otec'
+                      value="{{ otec.NomOtec }}">
+                        {{ otec.NomOtec }}
+                      </option>
+                    </select>
+                    <p class="text-danger text-form-valid"
+                    *ngIf="pForm.controls.capacitador.invalid && pForm.controls.capacitador.touched">
+                    Requerido
+                    </p>
+                  </div>
+                  <div class="form-goup col-sm-2">
+                    <label for="rutcap" class="col-form-label-sm">RUT OTEC</label>
+                    <input type="text" class="form-control form-control-sm"
+                    formControlName="rutcap">
+                </div>
+                  <div class="form-goup col-sm-3">
+                    <!-- ** COMPLETAR AUTO POR ORGANISMO CAPACITADOR ** -->
+                    <!-- ** CAMBIAR POR COMBO ** -->
+                      <label for="domiciliocap" class="col-form-label-sm">DOMICILIO OTEC</label>
+                      <input type="text" class="form-control form-control-sm"
+                      placement="right" formControlName="domiciliocap">
+                  </div>
+                </div>
+            </form>
+      </div>
+
+      <div class="card-body" [hidden]="this.alerts.length <= 0">
+        <div *ngFor="let alert of alerts">
+          <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}
+          </alert>
+        </div>
+      </div>
+
+      <div class="card-header" style="margin-top: -25px;">
+        <!-- <div class="row">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-info btn-sm ml-1 btn-fixed-tool" tooltip="CARGAR EXCEL"
+              [disabled]="load" (click)="onCargarxls()"><i class="far fa-file-excel"></i><span
+                class="btn-span-tool">
+                Cargar XLS</span></button>
+          </div>
+        </div> -->
+        <form novalidate [formGroup]="qForm" autocomplete="off" spellcheck="false">
+          <div class="form-row">
+            <!-- <div *ngIf="!pForm.valid" class="form-group col-md-12">
+            <label class="btn btn-info btn-sm pt-2 pb-2" 
+            style="background: #dddddd">
+              <i class="fas fa-upload" style="font-size: 15px"></i>
+             <strong> SELECCIONE ARCHIVO..</strong></label>
+            </div> -->
+            <div class="form-group col-sm-6">
+              <label *ngIf="pForm.valid" for="selectfile" class="btn btn-info btn-sm pt-2 pb-2" >
+                <i class="fas fa-upload" style="font-size: 15px"></i>
+               <strong> SELECCIONE ARCHIVO..</strong></label>
+               <label *ngIf="!pForm.valid" for="selectfile" class="btn btn-light btn-sm pt-2 pb-2" >
+                <i class="fas fa-upload" style="font-size: 15px"></i>
+               <strong style="color:lightgray"> SELECCIONE ARCHIVO..</strong></label>
+                <span class="file-name ml-2" *ngIf="filename !== null">{{ filename }}</span>
+            </div>
+            <div class="col-sm-3 mt-4">
+              TOTAL DE REGISTROS: ({{ totalreg }})
+            </div>
+            <!-- <p class="text-form-valid" *ngIf="data.length>0">PRELIMINAR :</p> -->
+            <p class="text-form-valid" *ngIf="data.length>0"></p>
+          </div>
+          <input type="file" id="selectfile" style="visibility:hidden;" multiple="false"
+          (change)="handleFileInput($event)" [disabled]="!pForm.valid">
+          <!-- <p class="text-danger text-form-valid"
+            *ngIf="!pForm.valid">
+            Debe completar los campos necesarios
+            </p> -->
+          <!-- <div class="form-row">
+            <div class="table-responsive">
+            <div class="form-group col-md-12" style="width: 100%;height: 400px"> 
+              <table *ngIf="preload" class="table table-sm table-striped table-condensed table-hover">
+                <tbody>
+                  <tr *ngFor="let row of data| slice:0:10">
+                  <td *ngFor="let val of row">
+                    {{val}}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <swal #alertSwalAlert title="" text="" type="warning" [showCancelButton]="false"></swal>
+  <swal #alertSwalConfirmar title="" text="" type="warning" [showCancelButton]="true"> </swal>
+  <swal #alertSwal title="" text="" type="success" [showCancelButton]="false"></swal>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"> </ngx-loading>
+
+</div>
